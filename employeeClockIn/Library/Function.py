@@ -4,7 +4,10 @@ import os.path
 import System
 import glob
 from datetime import datetime
-class inForm():
+class inForm(): #   
+#
+#   Function to login identification data
+#
     def Identification():
         while True:
             Identity = {
@@ -30,7 +33,11 @@ Type 'confirm' to accept this information: """.format(Identity['First Name'],Ide
                 pass
         Identity["Time of Arrival"] = datetime.today().strftime('%Y-%m-%d-%H:%M')
         return Identity
-class inFile():
+
+class inFile(): #   Functions which include import csv
+#
+#   Register Identity to csv
+#
     def Register(Identity):
         csv_columns = ['First Name','First Letter of Last Name','Date of Birth','Time of Arrival']
         Noise = 0
@@ -53,7 +60,9 @@ class inFile():
                 dict_writer = DictWriter(write_obj, fieldnames=csv_columns)
                 dict_writer.writeheader()
                 dict_writer.writerow(Identity)
-
+#
+#   Employee lookup
+#
     def employeeRegister():
         mylist = [f for f in glob.glob("../employeeClockIn/Database/*.csv")]
         choiceList = []
@@ -79,10 +88,4 @@ class inFile():
                         tempList.append(separator.join(row))
                     System.Separator.Line()
         except:
-            print("invalidfile")
-
-        
-
- 
-
-
+            System.Messages.invalidFile()

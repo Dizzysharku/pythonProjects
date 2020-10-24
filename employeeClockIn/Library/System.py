@@ -1,3 +1,6 @@
+#
+#   Message Error Pulling
+#
 class Messages():
     def ERROR():
         print("""--------------------
@@ -7,6 +10,10 @@ class Messages():
         print("""----------------------------
 -You are already registered-
 ----------------------------""")
+    def invalidFile():
+        print("""--------------
+-Invalid File-
+--------------""")
 class Separator():
     def Line():
         print("----------------------------")

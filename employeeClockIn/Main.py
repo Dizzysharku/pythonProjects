@@ -2,7 +2,9 @@ import sys
 sys.path.insert(1, '../employeeClockIn/Library')
 from Library import Function
 from Library import System
-from datetime import datetime
+#
+#   Main File for call
+#
 def Menu():
     Identity = Function.inForm.Identification()
     System.Separator.Line()
