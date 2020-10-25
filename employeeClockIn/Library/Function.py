@@ -1,7 +1,9 @@
 from csv import DictWriter
 import csv
 import os.path
-import System
+import sys
+sys.path.insert(1, '../employeeClockIn/Library')
+from Library import System
 import glob
 from datetime import datetime
 class inForm(): #   
@@ -17,9 +19,16 @@ class inForm(): #
                 "Time of Arrival": ""
             }
             print("\tPlease identify yourself: ")
-            Identity["First Name"] = str(input("\tFirst Name: "))
-            Identity["First Letter of Last Name"] = str(input("\tFirst Letter of Last Name: "))
-            Identity["Date of Birth"] = str(input("\tIn the format Day/Month/Year\n\tDate of Birth: "))
+            Identity["First Name"] = str(input("\tFirst Name: ")).capitalize()
+            Identity["First Letter of Last Name"] = str(input("\tFirst Letter of Last Name: ")).capitalize()
+            while True:
+                dateBirth = str(input("\tIn the format Day/Month/Year\n\tDate of Birth: "))
+                tempString = dateBirth.split("/")
+                if (len(tempString[0]) == 2) and (len(tempString[1]) == 2) and (len(tempString[2]) == 4):
+                    Identity["Date of Birth"] = dateBirth
+                    break
+                else:
+                    System.Messages.ERROR()
             choice = str(input("""Are you satisfied with the data collected:
 ----------------------------
             First Name: {}
