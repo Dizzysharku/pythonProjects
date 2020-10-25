@@ -29,6 +29,7 @@ def Menu():
                 break
             else:
                 System.Messages.ERROR()
+                pass
         except:
             pass
 

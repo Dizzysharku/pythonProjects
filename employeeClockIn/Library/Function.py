@@ -1,9 +1,7 @@
 from csv import DictWriter
 import csv
 import os.path
-import sys
-sys.path.insert(1, '../employeeClockIn/Library')
-from Library import System
+import System
 import glob
 from datetime import datetime
 class inForm(): #   
