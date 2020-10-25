@@ -13,7 +13,7 @@ def Menu():
         try:
             System.Separator.Line()
             choice = int(input("""\tMenu:
-            1. Registered Employees Today
+            1. Employee Logs
             2. Register yourself
             3. Logout
             4. Quit
