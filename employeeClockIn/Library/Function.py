@@ -40,7 +40,7 @@ Type 'confirm' to accept this information: """.format(Identity['First Name'],Ide
                 break
             else:
                 pass
-        Identity["Time of Arrival"] = datetime.today().strftime('%Y-%m-%d-%H:%M')
+        Identity["Time of Arrival"] = datetime.today().strftime('%H:%M')
         return Identity
 
 class inFile(): #   Functions which include import csv
@@ -95,6 +95,7 @@ class inFile(): #   Functions which include import csv
                         System.Separator.Line()
                         print(str(counter) + ". " + separator.join(row))
                         tempList.append(separator.join(row))
+                        counter += 1
                     System.Separator.Line()
         except:
             System.Messages.invalidFile()
