@@ -1,5 +1,4 @@
 import sys
-sys.path.insert(1, '../employeeClockIn/Library')
 from Library import Function
 from Library import System
 #
