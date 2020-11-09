@@ -1,13 +1,10 @@
 from csv import DictWriter
 import csv
 import os.path
-from Library import System
+import System
 import glob
 from datetime import datetime
-class inForm(): #   
-#
-#   Function to login identification data
-#
+class inForm(): 
     def Identification():
         while True:
             Identity = {
@@ -41,10 +38,7 @@ Type 'confirm' to accept this information: """.format(Identity['First Name'],Ide
         Identity["Time of Arrival"] = datetime.today().strftime('%H:%M')
         return Identity
 
-class inFile(): #   Functions which include import csv
-#
-#   Register Identity to csv
-#
+class inFile(): 
     def Register(Identity):
         csv_columns = ['First Name','First Letter of Last Name','Date of Birth','Time of Arrival']
         Noise = 0
@@ -67,9 +61,7 @@ class inFile(): #   Functions which include import csv
                 dict_writer = DictWriter(write_obj, fieldnames=csv_columns)
                 dict_writer.writeheader()
                 dict_writer.writerow(Identity)
-#
-#   Employee lookup
-#
+
     def employeeRegister():
         mylist = [f for f in glob.glob("../EMPLOYEE-LOGIN/Database/*.csv")]
         choiceList = []
@@ -91,9 +83,14 @@ class inFile(): #   Functions which include import csv
                     csv_reader = csv.reader(csv_file)
                     for row in csv_reader:
                         System.Separator.Line()
-                        print(str(counter) + ". " + separator.join(row))
+                        if not(counter == 0):
+                            print(str(counter) + ". " + separator.join(row))
+                        else:
+                            print(separator.join(row))
                         tempList.append(separator.join(row))
                         counter += 1
                     System.Separator.Line()
+             
+
         except:
             System.Messages.invalidFile()
