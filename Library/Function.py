@@ -42,8 +42,8 @@ class inFile():
     def Register(Identity):
         csv_columns = ['First Name','First Letter of Last Name','Date of Birth','Time of Arrival']
         Noise = 0
-        if ((os.path.exists('../EMPLOYEE-LOGIN/Database/{}.csv'.format(datetime.today().strftime('%Y-%m-%d'))) == True)):
-            with open('../EMPLOYEE-LOGIN/Database/{}.csv'.format(datetime.today().strftime('%Y-%m-%d')), mode='r') as csv_file:
+        if ((os.path.exists('../Employee-login-main/Database/{}.csv'.format(datetime.today().strftime('%Y-%m-%d'))) == True)):
+            with open('../Employee-login-main/Database/{}.csv'.format(datetime.today().strftime('%Y-%m-%d')), mode='r') as csv_file:
                 csv_reader = csv.reader(csv_file)
                 for row in csv_reader:
                     if (row[0] == Identity['First Name']) and (row[1] == Identity['First Letter of Last Name']):
@@ -51,19 +51,19 @@ class inFile():
                     else:
                         pass
             if not(Noise == 1):
-                with open('../EMPLOYEE-LOGIN/Database/{}.csv'.format(datetime.today().strftime('%Y-%m-%d')),'a+', newline='') as write_obj:
+                with open('../Employee-login-main/Database/{}.csv'.format(datetime.today().strftime('%Y-%m-%d')),'a+', newline='') as write_obj:
                     dict_writer = DictWriter(write_obj, fieldnames=csv_columns)
                     dict_writer.writerow(Identity)
             else:
                 System.Messages.registerError()
         else:
-            with open('../EMPLOYEE-LOGIN/Database/{}.csv'.format(datetime.today().strftime('%Y-%m-%d')),'a+', newline='') as write_obj:
+            with open('../Employee-login-main/Database/{}.csv'.format(datetime.today().strftime('%Y-%m-%d')),'a+', newline='') as write_obj:
                 dict_writer = DictWriter(write_obj, fieldnames=csv_columns)
                 dict_writer.writeheader()
                 dict_writer.writerow(Identity)
 
     def employeeRegister():
-        mylist = [f for f in glob.glob("../EMPLOYEE-LOGIN/Database/*.csv")]
+        mylist = [f for f in glob.glob("../Employee-login-main/Database/*.csv")]
         choiceList = []
         counter = 0
         while not(len(mylist) == counter):     
@@ -79,7 +79,7 @@ class inFile():
             print((choiceList[(choice)-1]))
             tempList = []
             counter = 0
-            with open(('../EMPLOYEE-LOGIN/Database/' + choiceList[(choice)-1]), mode='r') as csv_file:
+            with open(('../Employee-login-main/Database/' + choiceList[(choice)-1]), mode='r') as csv_file:
                     csv_reader = csv.reader(csv_file)
                     for row in csv_reader:
                         System.Separator.Line()
