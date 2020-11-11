@@ -1,5 +1,5 @@
 import sys
-sys.path.insert(1, '../EMPLOYEE-LOGIN/Library')
+sys.path.insert(1, '../Employee-login-main/Library')
 from Library import Function
 from Library import System
 #
