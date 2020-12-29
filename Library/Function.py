@@ -1,11 +1,10 @@
 from csv import DictWriter
 import csv
 import os.path
-import System
 import glob
 from datetime import datetime
 class inForm(): 
-    def Identification():
+    def Identification(self):
         while True:
             Identity = {
                 "First Name": "",
@@ -23,7 +22,7 @@ class inForm():
                     Identity["Date of Birth"] = dateBirth
                     break
                 else:
-                    System.Messages.ERROR()
+                    Messages.ERROR(0)
             choice = str(input("""Are you satisfied with the data collected:
 ----------------------------
             First Name: {}
@@ -39,11 +38,11 @@ Type 'confirm' to accept this information: """.format(Identity['First Name'],Ide
         return Identity
 
 class inFile(): 
-    def Register(Identity):
+    def Register(self,Identity):
         csv_columns = ['First Name','First Letter of Last Name','Date of Birth','Time of Arrival']
         Noise = 0
-        if ((os.path.exists('../Employee-login-main/Database/{}.csv'.format(datetime.today().strftime('%Y-%m-%d'))) == True)):
-            with open('../Employee-login-main/Database/{}.csv'.format(datetime.today().strftime('%Y-%m-%d')), mode='r') as csv_file:
+        if ((os.path.exists('Database/{}.csv'.format(datetime.today().strftime('%Y-%m-%d'))) == True)):
+            with open('Database/{}.csv'.format(datetime.today().strftime('%Y-%m-%d')), mode='r') as csv_file:
                 csv_reader = csv.reader(csv_file)
                 for row in csv_reader:
                     if (row[0] == Identity['First Name']) and (row[1] == Identity['First Letter of Last Name']):
@@ -51,19 +50,19 @@ class inFile():
                     else:
                         pass
             if not(Noise == 1):
-                with open('../Employee-login-main/Database/{}.csv'.format(datetime.today().strftime('%Y-%m-%d')),'a+', newline='') as write_obj:
+                with open('Database/{}.csv'.format(datetime.today().strftime('%Y-%m-%d')),'a+', newline='') as write_obj:
                     dict_writer = DictWriter(write_obj, fieldnames=csv_columns)
                     dict_writer.writerow(Identity)
             else:
-                System.Messages.registerError()
+                Messages.registerError(0)
         else:
-            with open('../Employee-login-main/Database/{}.csv'.format(datetime.today().strftime('%Y-%m-%d')),'a+', newline='') as write_obj:
+            with open('Database/{}.csv'.format(datetime.today().strftime('%Y-%m-%d')),'a+', newline='') as write_obj:
                 dict_writer = DictWriter(write_obj, fieldnames=csv_columns)
                 dict_writer.writeheader()
                 dict_writer.writerow(Identity)
 
-    def employeeRegister():
-        mylist = [f for f in glob.glob("../Employee-login-main/Database/*.csv")]
+    def employeeRegister(self):
+        mylist = [f for f in glob.glob("Database/*.csv")]
         choiceList = []
         counter = 0
         while not(len(mylist) == counter):     
@@ -74,23 +73,36 @@ class inFile():
             choiceList.append(stringTwo)
             counter += 1
         choice = int(input("Which date would you like to lookup: "))
-        try:
-            separator = ', '
-            print((choiceList[(choice)-1]))
-            tempList = []
-            counter = 0
-            with open(('../Employee-login-main/Database/' + choiceList[(choice)-1]), mode='r') as csv_file:
-                    csv_reader = csv.reader(csv_file)
-                    for row in csv_reader:
-                        System.Separator.Line()
-                        if not(counter == 0):
-                            print(str(counter) + ". " + separator.join(row))
-                        else:
-                            print(separator.join(row))
-                        tempList.append(separator.join(row))
-                        counter += 1
-                    System.Separator.Line()
-             
-
-        except:
-            System.Messages.invalidFile()
+        separator = ', '
+        print((choiceList[(choice)-1]))
+        tempList = []
+        counter = 0
+        with open(('Database/' + choiceList[(choice)-1]), mode='r') as csv_file:
+                csv_reader = csv.reader(csv_file)
+                for row in csv_reader:
+                    Separator.Line(0)
+                    if not(counter == 0):
+                        print(str(counter) + ". " + separator.join(row))
+                    else:
+                        print(separator.join(row))
+                    tempList.append(separator.join(row))
+                    counter += 1
+                Separator.Line(0)
+            
+class Messages():
+    def ERROR(self):
+        print("""--------------------
+- Error with Input -
+--------------------""")
+    def registerError(self):
+        print("""----------------------------
+-You are already registered-
+----------------------------""")
+    def invalidFile(self):
+        print("""--------------
+-Invalid File-
+--------------""")
+class Separator():
+    def Line(self):
+        print("----------------------------")
+        
