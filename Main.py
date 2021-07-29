@@ -3,13 +3,17 @@ import csv
 import os.path
 import glob
 from datetime import datetime
-import Encrypter
 import random
+import sys
+sys.path.insert(1, '..\Cipher')
+from Cipher25514 import Command as Encrypt
 #
 #   Main File for call
 #
+
+Key = 1111111111111111111111111
 class inForm(): 
-    def Identification(self):
+    def Identification(self,Key):
         while True:
             Identity = {
                 "First Name": "",
@@ -18,33 +22,34 @@ class inForm():
                 "Time of Arrival": ""
             }
             print("\tPlease identify yourself: ")
-            Identity["First Name"] = Encrypter.InnitWrite(str(input("\tFirst Name: ")).capitalize())
+            Identity["First Name"] = Encrypt(f"-run encrypt manual {Key} {str(input('First Name: ')).capitalize()}")[1]
             while True:
-                Identity["First Letter of Last Name"] = Encrypter.InnitWrite(str(input("\tFirst Letter of Last Name: ")).capitalize()[0])
-                if len(Identity["First Letter of Last Name"]) == 1:
+                Identity["First Letter of Last Name"] = Encrypt(f"-run encrypt manual {Key} {str(input('First Letter of Last Name: ')).capitalize()[0]}")[1]
+                if len(Encrypt(f"-run decrypt manual {Key} {Identity['First Letter of Last Name']}")[1]) == 1:
                     break
                 else:
                     Messages.ERROR(0)
             while True:
-                dateBirth = str(input("\tIn the format Day/Month/Year\n\tDate of Birth: "))
+                Separator.Line(0)
+                dateBirth = str(input("In the format Day/Month/Year\nDate of Birth: "))
                 tempString = dateBirth.split("/")
                 if (len(tempString[0]) == 2) and (len(tempString[1]) == 2) and (len(tempString[2]) == 4):
-                    Identity["Date of Birth"] = Encrypter.InnitWrite(dateBirth)
+                    Identity["Date of Birth"] = Encrypt(f"-run encrypt manual {Key} {dateBirth}")[1]
                     break
                 else:
                     Messages.ERROR(0)
             choice = str(input(f"""Are you satisfied with the data collected:
 ----------------------------
-            First Name: {Encrypter.InnitRead(Identity['First Name'])}
-            First Letter of your last name: {Encrypter.InnitRead(Identity['First Letter of Last Name'])}
-            Date of Birth: {Encrypter.InnitRead(Identity['Date of Birth'])}
+            First Name: {Encrypt(f"-run decrypt manual {Key} {Identity['First Name']}")[1]}
+            First Letter of your last name: {Encrypt(f"-run decrypt manual {Key} {Identity['First Letter of Last Name']}")[1]}
+            Date of Birth: {Encrypt(f"-run decrypt manual {Key} {Identity['Date of Birth']}")[1]}
 ----------------------------
 Type 'confirm' to accept this information: """))
             if choice == 'confirm':
                 break
             else:
                 pass
-        Identity["Time of Arrival"] = Encrypter.InnitWrite(datetime.today().strftime('%H:%M'))
+        Identity["Time of Arrival"] = Encrypt(f"-run encrypt manual {Key} {datetime.today().strftime('%H:%M')}")[1]
         return Identity
 
 class inFile(): 
@@ -95,7 +100,7 @@ class inFile():
                     if not(counter == 0):
                         print(f"{counter}", end =" | ")
                         for x in row:
-                            print(Encrypter.InnitRead(x), end =" | ")
+                            print(Encrypt(f"-run decrypt manual {Key} {x}")[1], end =" | ")
                     else:
                         print("\n")
                         print(separator.join(row))
@@ -122,11 +127,10 @@ class Separator():
     def Line(self):
         print("----------------------------")
         
-def Menu():
-    Identity = inForm.Identification(0)
-    print(Identity)
+def Menu(Key):
+    Identity = inForm.Identification(0,Key)
     Separator.Line(0)
-    print("\tWelcome {} {}".format(Encrypter.InnitRead(Identity['First Name']),Encrypter.InnitRead(Identity['First Letter of Last Name'])))
+    print("\tWelcome {} {}".format(Encrypt(f"-run decrypt manual {Key} {Identity['First Name']}")[1],Encrypt(f"-run decrypt manual {Key} {Identity['First Letter of Last Name']}")[1]))
     while True:
 
         Separator.Line(0)
@@ -155,13 +159,14 @@ df = pd.read_csv('names.csv', delimiter='\n', names=['text'])
 print(df)
 for n in range(0,100):
     Identity = {
-        "First Name": Encrypter.InnitWrite(df["text"][random.randint(0,len(df["text"])-1)]),
-        "First Letter of Last Name": Encrypter.InnitWrite(df["text"][random.randint(0,len(df["text"])-1)][0]),
-        "Date of Birth": Encrypter.InnitWrite(f"{random.randint(0,30)}/{random.randint(0,12)}/{random.randint(1950,2021)}"),
-        "Time of Arrival": Encrypter.InnitWrite(f"{random.randint(0,24)}:{random.randint(0,59)}")
+        "First Name": Encrypt(f"-run encrypt manual {Key} {df['text'][random.randint(0,len(df['text'])-1)]}")[1],
+        "First Letter of Last Name": Encrypt(f"-run encrypt manual {Key} {df['text'][random.randint(0,len(df['text'])-1)][0]}")[1],
+        "Date of Birth": Encrypt(f"-run encrypt manual {Key} {random.randint(0,30)}/{random.randint(0,12)}/{random.randint(1950,2021)}")[1],
+        "Time of Arrival": Encrypt(f"-run encrypt manual {Key} {random.randint(0,24)}:{random.randint(0,59)}")[1]
             }
     inFile.Register(0,Identity)
-   ''' 
-Menu()
+'''
+Menu(Key)
+#print(Encrypt("-run encrypt random hello my name is yan"))
 #inFile.employeeRegister(0)
 
