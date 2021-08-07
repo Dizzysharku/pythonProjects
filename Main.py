@@ -5,7 +5,7 @@ import glob
 from datetime import datetime
 import random
 import sys
-sys.path.insert(1, '..\Cipher')
+sys.path.insert(1, 'D:\Google Drive\Source Code\GitCipher')
 from Cipher25514 import Command as Encrypt
 #
 #   Main File for call
@@ -75,6 +75,7 @@ class inFile():
                 dict_writer = DictWriter(write_obj, fieldnames=csv_columns)
                 dict_writer.writeheader()
                 dict_writer.writerow(Identity)
+        print("You've Registered!")
 
     def employeeRegister(self):
         mylist = [f for f in glob.glob("Database/*.csv")]
@@ -152,21 +153,4 @@ def Menu(Key):
         else:
             Messages.ERROR(0)
             pass
-#Menu()
-'''
-import pandas as pd
-df = pd.read_csv('names.csv', delimiter='\n', names=['text'])
-print(df)
-for n in range(0,100):
-    Identity = {
-        "First Name": Encrypt(f"-run encrypt manual {Key} {df['text'][random.randint(0,len(df['text'])-1)]}")[1],
-        "First Letter of Last Name": Encrypt(f"-run encrypt manual {Key} {df['text'][random.randint(0,len(df['text'])-1)][0]}")[1],
-        "Date of Birth": Encrypt(f"-run encrypt manual {Key} {random.randint(0,30)}/{random.randint(0,12)}/{random.randint(1950,2021)}")[1],
-        "Time of Arrival": Encrypt(f"-run encrypt manual {Key} {random.randint(0,24)}:{random.randint(0,59)}")[1]
-            }
-    inFile.Register(0,Identity)
-'''
 Menu(Key)
-#print(Encrypt("-run encrypt random hello my name is yan"))
-#inFile.employeeRegister(0)
-
