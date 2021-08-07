@@ -5,7 +5,7 @@ import glob
 from datetime import datetime
 import random
 import sys
-sys.path.insert(1, 'D:\Google Drive\Source Code\GitCipher')
+sys.path.insert(1, '../Cipher')
 from Cipher25514 import Command as Encrypt
 #
 #   Main File for call
